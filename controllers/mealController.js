@@ -27,7 +27,26 @@ const createNewMeal = async (req, res) => {
     }
 }
 
-module.exports = { createNewMeal, getAllMeals };
+const updateMeal = async (req, res) => {
+    if (!req?.body?.id) {
+        return res.status(400).json({ 'message': 'ID parameter is required.' });
+    }
+    const meal = await Meal.findOne({ _id: req.body.id }).exec();
+    if (!meal) {
+        return res.status(204).json({ "message": `No meal matches ID ${req.body.id}.` });
+    }
+    
+    meal.nameMeal = req.body.nameMeal,
+    meal.priceMeal = req.body.priceMeal,
+    meal.items = req.body.items,
+    meal.allergies = req.body.allergies,
+    meal.extras = req.body.extras,
+    meal.active = req.body.active
+    const result = await meal.save();
+    res.json(result);
+}
+
+module.exports = { createNewMeal, getAllMeals, updateMeal};
 
 
 
