@@ -7,5 +7,7 @@ router.route('/')
   .get(mealController.getAllMeals)
   .put(mealController.updateMeal)
 
+router.route('/:id')
+    .get(mealController.getMeal);
 
 module.exports = router;

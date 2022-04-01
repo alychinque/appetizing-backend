@@ -46,7 +46,17 @@ const updateMeal = async (req, res) => {
     res.json(result);
 }
 
-module.exports = { createNewMeal, getAllMeals, updateMeal};
+const getMeal = async (req, res) => {
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'Employee ID required.' });
+
+    const meal = await Meal.findOne({ _id: req.params.id }).exec();
+    if (!meal) {
+        return res.status(204).json({ "message": `No meal matches ID ${req.params.id}.` });
+    }
+    res.json(meal);
+}
+
+module.exports = { createNewMeal, getAllMeals, updateMeal, getMeal};
 
 
 
