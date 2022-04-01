@@ -12,14 +12,14 @@ require('dotenv').config()
 
 const PORT = process.env.PORT || 8000
 
+// built-in middleware for json 
+app.use(express.json());
+
 // Connect to MongoDB
 connectDB()
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
-
-// built-in middleware for json 
-app.use(express.json());
 
 // Routes
 app.use('/meal', require('./routes/meal'));

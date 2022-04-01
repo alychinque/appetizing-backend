@@ -5,7 +5,7 @@ const mealController = require('../controllers/mealController');
 router.route('/')
   .post(mealController.createNewMeal)
   .get(mealController.getAllMeals)
-  .put(mealController.updateMeal);
+  .put(mealController.updateMeal)
 
 
 module.exports = router;
