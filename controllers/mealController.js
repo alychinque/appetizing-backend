@@ -1,5 +1,11 @@
 const Meal = require('../model/Meal.js')
 
+const getAllMeals = async (req, res) => {
+    const meals = await Meal.find()
+    if (!meals) return res.status(204).json({ 'message': 'No meals found.' })
+    res.json(meals)
+}
+
 const createNewMeal = async (req, res) => {
   const meal = req.body
   try {
@@ -17,11 +23,11 @@ const createNewMeal = async (req, res) => {
 
         res.status(201).json({ 'success': `New meal ${meal} created!` });
     } catch (err) {
-        res.status(500).json({ 'message123': err.message });
+        res.status(500).json({ 'message': err.message });
     }
 }
 
-module.exports = { createNewMeal };
+module.exports = { createNewMeal, getAllMeals };
 
 
 
