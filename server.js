@@ -23,6 +23,7 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/meal', require('./routes/meal'));
 app.use('/item', require('./routes/item'));
+app.use('/drink', require('./routes/drink'));
 
 mongoose.connection.once('open', () => {
     console.log('Connect to MongoDB')
