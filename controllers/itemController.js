@@ -26,4 +26,4 @@ const getAllItems = async(req, res) => {
     if (!items) return res.status(204).json({ 'message': 'No items found.' })
     res.json(items)
 }
-module.exports = { createNewItem }
+module.exports = { createNewItem, getAllItems }
