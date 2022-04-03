@@ -23,8 +23,9 @@ app.use(cors(corsOptions));
 
 // Routes
 app.use('/meal', require('./routes/meal'));
+app.use('/item', require('./routes/item'));
 
 mongoose.connection.once('open', () => {
-  console.log('Connect to MongoDB')
-  app.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
+    console.log('Connect to MongoDB')
+    app.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
 })
