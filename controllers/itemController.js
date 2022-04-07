@@ -11,7 +11,7 @@ const createNewItem = async(req, res) => {
             "priceItem": item.priceItem
         })
         res.status(201).json({
-            'success': `new Item ${item} created`
+            'success': `new Item ${item.nameItem} created`
         })
 
     } catch (error) {
@@ -21,9 +21,48 @@ const createNewItem = async(req, res) => {
     }
 }
 
+const updateItem = async(req, res) => {
+
+    if (!req.body.id) {
+        return res.status(400).json({ 'message': 'ID parameter is required.' });
+    }
+    const item = await Item.findOne({ _id: req.body.id }).exec();
+    if (!item) {
+        return res.status(204).json({ "message": `No item matches ID ${req.body.id}.` });
+    }
+
+    item.nameItem = req.body.nameItem,
+        item.priceItem = req.body.priceItem
+    const result = await item.save()
+    res.status(200).json(result)
+
+}
+
+const deleteItem = async(req, res) => {
+    console.log(req.body.id)
+    if (!req.body.id) {
+        return res.status(400).json({ 'message': 'Item ID required.' });
+    }
+
+    const item = await Item.findOne({ _id: req.body.id }).exec();
+    console.log(item.nameItem)
+    if (!item) {
+        return res.status(204).json({ "message": `No item matches ID ${req.body.id}.` });
+    }
+    const result = await item.deleteOne({ _id: req.body.id });
+    res.json(result);
+
+
+
+
+
+
+}
+
+
 const getAllItems = async(req, res) => {
     const items = await Item.find()
     if (!items) return res.status(204).json({ 'message': 'No items found.' })
     res.json(items)
 }
-module.exports = { createNewItem, getAllItems }
+module.exports = { createNewItem, getAllItems, updateItem, deleteItem }
