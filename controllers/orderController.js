@@ -2,9 +2,6 @@ const Order = require('../model/Order')
 
 const createOrder = async (req, res) => {
   const order = req.body
-  let date = new Date
-  console.log(date.toDateString())
-  console.log(date)
   try {
     // creates a new order and store in the database
     const result = await Order.create({
@@ -32,4 +29,25 @@ const getAllOrders = async (req, res) => {
     res.json(orders)
 }
 
-module.exports = { createOrder, getAllOrders }
+const updateOrder = async (req, res) => {
+    if (!req?.body?._id) {
+        return res.status(400).json({ 'message': 'ID parameter is required.' });
+    }
+    const order = await Order.findOne({ _id: req.body._id }).exec();
+    if (!order) {
+        return res.status(204).json({ "message": `No order matches ID ${req.body._id}.` });
+    }
+    
+    order.idUser = req.body.idUser
+    order.meals = req.body.meals
+    order.table = req.body.table
+    order.message = req.body.message
+    order.extra = req.body.extra
+    order.priceTotal = req.body.priceTotal
+    order.status = req.body.status
+    order.date = req.body.date
+    const result = await order.save();
+    res.json(result);
+}
+
+module.exports = { createOrder, getAllOrders, updateOrder }
