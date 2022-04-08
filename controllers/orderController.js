@@ -50,4 +50,19 @@ const updateOrder = async (req, res) => {
     res.json(result);
 }
 
-module.exports = { createOrder, getAllOrders, updateOrder }
+const deleteOrder = async (req, res, next) => {
+  try {
+    if (!req?.body?._id) return res.status(400).json({ 'message': 'Order ID required.' });
+
+    const order = await Order.findOne({ _id: req.body._id }).exec();
+    if (!order) {
+        return res.status(204).json({ "message": `No order matches ID ${req.body._id}.` });
+    }
+    const result = await order.deleteOne({ _id: req.body._id });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ 'message': error.message });
+  }
+}
+
+module.exports = { createOrder, getAllOrders, updateOrder, deleteOrder }
