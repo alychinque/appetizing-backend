@@ -52,4 +52,14 @@ const deleteDrink = async (req, res) => {
     const result = await drink.deleteOne({ _id: req.body.id });
     res.json(result);
 }
-module.exports = { createNewDrink, getAllDrinks, updateDrink, deleteDrink }
+const getDrink = async (req, res) => {
+  if (!req?.params?.id) return res.status(400).json({ 'message': 'Drink ID required.' });
+
+    const drink = await Drink.findOne({ _id: req.params.id }).exec();
+    if (!drink) {
+        return res.status(204).json({ "message": `No drink matches ID ${req.params.id}.` });
+    }
+    res.json(drink);
+}
+
+module.exports = { createNewDrink, getAllDrinks, updateDrink, deleteDrink, getDrink }

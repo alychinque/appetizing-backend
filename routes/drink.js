@@ -8,4 +8,7 @@ router.route('/')
   .put(drinkController.updateDrink)
   .delete(drinkController.deleteDrink)
 
+router.route('/:id')
+  .get(drinkController.getDrink)
+
 module.exports = router
