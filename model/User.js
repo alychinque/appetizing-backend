@@ -15,12 +15,12 @@ const userSchema = new Schema({
     required: true
   },
   passwordUser: {
-    type: Array,
+    type: String,
     required: true
   },
   active: {
     type: Boolean,
-    required: true
+    default: true
   }
 })
 module.exports = mongoose.model('User', userSchema)

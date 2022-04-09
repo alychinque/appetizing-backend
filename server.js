@@ -25,6 +25,7 @@ app.use('/meal', require('./routes/meal'));
 app.use('/item', require('./routes/item'));
 app.use('/drink', require('./routes/drink'));
 app.use('/order', require('./routes/order'));
+app.use('/user', require('./routes/user'));
 
 mongoose.connection.once('open', () => {
     console.log('Connect to MongoDB')
