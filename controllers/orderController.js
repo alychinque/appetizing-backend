@@ -65,4 +65,19 @@ const deleteOrder = async (req, res, next) => {
   }
 }
 
-module.exports = { createOrder, getAllOrders, updateOrder, deleteOrder }
+const getOrder = async (req, res) => {
+  try {
+    if (!req?.params?._id) return res.status(400).json({ 'message': 'Order ID required.' });
+
+    const order = await Order.findOne({ _id: req.params._id }).exec();
+    if (!order) {
+        return res.status(204).json({ "message": `No order matches ID ${req.params._id}.` });
+    }
+    res.json(meal);
+  } catch (error) {
+    res.status(500).json({ 'message': error.message });
+  }
+}
+
+
+module.exports = { createOrder, getAllOrders, updateOrder, deleteOrder, getOrder }
