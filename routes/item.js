@@ -8,4 +8,7 @@ router.route('/')
     .put(itemController.updateItem)
     .delete(itemController.deleteItem)
 
+router.route('/:id')
+    .get(itemController.getItem)
+
 module.exports = router;

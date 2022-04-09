@@ -51,12 +51,6 @@ const deleteItem = async(req, res) => {
     }
     const result = await item.deleteOne({ _id: req.body.id });
     res.json(result);
-
-
-
-
-
-
 }
 
 
@@ -65,4 +59,15 @@ const getAllItems = async(req, res) => {
     if (!items) return res.status(204).json({ 'message': 'No items found.' })
     res.json(items)
 }
-module.exports = { createNewItem, getAllItems, updateItem, deleteItem }
+
+const getItem = async (req, res) => {
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'Item ID required.' });
+
+    const item = await Item.findOne({ _id: req.params.id }).exec();
+    if (!item) {
+        return res.status(204).json({ "message": `No item matches ID ${req.params.id}.` });
+    }
+    res.json(item);
+}
+
+module.exports = { createNewItem, getAllItems, updateItem, deleteItem, getItem }
