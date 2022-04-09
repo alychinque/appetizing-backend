@@ -52,5 +52,34 @@ const updateUser = async (req, res) => {
   }
 }
 
+const deleteUser = async (req, res, next) => {
+  try {
+    if (!req?.body?._id) return res.status(400).json({ 'message': 'User ID required.' });
 
-module.exports = { createNewUser, getAllUsers, updateUser };
+    const user = await User.findOne({ _id: req.body._id }).exec();
+    if (!user) {
+        return res.status(204).json({ "message": `No user matches ID ${req.body._id}.` });
+    }
+    const result = await user.deleteOne({ _id: req.body._id });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ 'message': error.message });
+  }
+}
+
+const getUser = async (req, res) => {
+  try {
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'User ID required.' });
+
+    const user = await User.findOne({ _id: req.params.id }).exec();
+    if (!user) {
+        return res.status(204).json({ "message": `No User matches ID ${req.params._id}.` });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ 'message': error.message });
+  }
+}
+
+
+module.exports = { createNewUser, getAllUsers, updateUser, deleteUser, getUser };

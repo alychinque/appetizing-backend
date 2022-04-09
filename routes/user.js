@@ -6,5 +6,9 @@ router.route('/')
   .post(userController.createNewUser)
   .get(userController.getAllUsers)
   .put(userController.updateUser)
+  .delete(userController.deleteUser)
+
+router.route('/:id')
+    .get(userController.getUser)
 
 module.exports = router;
