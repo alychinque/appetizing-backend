@@ -23,6 +23,7 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/meal', require('./routes/meal'));
 app.use('/item', require('./routes/item'));
+app.use('/allergy', require('./routes/allergy'));
 app.use('/drink', require('./routes/drink'));
 app.use('/order', require('./routes/order'));
 app.use('/user', require('./routes/user'));
