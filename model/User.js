@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  active: {
+  activeUser: {
     type: Boolean,
     default: true
   }
