@@ -5,7 +5,11 @@ const orderSchema = new Schema({
   idUser: {
     type: String
   },
-  meals: {
+  meal: {
+    type: Array,
+    required: true
+  },
+  drink: {
     type: Array,
     required: true
   },
@@ -15,9 +19,6 @@ const orderSchema = new Schema({
   },
   message: {
     type: String
-  },
-  extras: {
-    type: Array
   },
   priceTotal: {
     type: Number,

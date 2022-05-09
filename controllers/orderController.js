@@ -2,17 +2,18 @@ const Order = require('../model/Order')
 
 const createOrder = async (req, res) => {
   const order = req.body
+  var datetime = new Date();
+
   try {
     // creates a new order and store in the database
     const result = await Order.create({
       "idUser": order.idUser,
-      "meals": order.meals,
+      "meal": order.meal,
+      "drink": order.drink,
       "table": order.table,
-      "message": order.message,
-      "extra": order.extra,
       "priceTotal": order.priceTotal,
-      "status": order.status,
-      "date": order.date,
+      "status": "PAID",
+      "date": datetime,
     })
 
     console.log(result)
