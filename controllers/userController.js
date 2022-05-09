@@ -1,29 +1,30 @@
 const User = require('../model/User.js')
+const bcrypt = require('bcryptjs')
 
-const createNewUser = async (req, res) => {
+const createNewUser = async (req, res, next) => {
   const user = req.body
-
-  //blocks same email
-  const find = await User.findOne({ emailUser: req.body.email }).exec();
-  if (!find) {
+  const find = await User.findOne({ email: req.body.email }).exec();
   try {
-    //create and store the new user
-    const result = await User.create({
-      "nameUser": user.name,
-      "emailUser": user.email,
-      "phoneUser": user.phone,
-      "passwordUser": user.password,
-      });
-
-      console.log(result);
-
-      res.status(201).json({ 'success': `New user ${user.nameUser} created!` });
-    } catch (err) {
-        res.status(500).json({ 'message': err.message });
+    if (!find) {
+      if (req.body.password == req.body.confirm_password) {
+          //create and store the new user
+          const saltRounds = 10;
+          const hashedPwd = await bcrypt.hash(req.body.password, saltRounds);
+          const result = await User.create({
+            "name": user.name,
+            "email": user.email,
+            "phone": user.phone,
+            "password": hashedPwd,
+            });
+          res.status(201).json({ 'success': `New user ${user.name} created!` });
+      }else{
+        res.status(400).json({ 'message': 'Passwords do not match.' });
+      }
+    }else{
+      res.status(422).json({ 'message': 'User already exists.' });
     }
-  }
-  else{
-    res.status(500).json({ 'message': 'User already exists' });
+  } catch (err) {
+    res.status(400).json({ 'message': err.message });
   }
 }
 
@@ -55,7 +56,6 @@ const updateUser = async (req, res) => {
     user.password = req.body.password
     user.active = req.body.active
     const result = await user.save();
-    console.log(result)
     res.json(result);
   } catch (error) {
     res.status(500).json({ 'message': error.message });

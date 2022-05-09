@@ -21,7 +21,7 @@ const createNewMeal = async (req, res) => {
 
         console.log(result);
 
-        res.status(201).json({ 'success': `New meal ${meal} created!` });
+        res.status(201).json({ 'success': `New meal ${meal.nameMeal} created!` });
     } catch (err) {
         res.status(500).json({ 'message': err.message });
     }

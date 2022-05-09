@@ -1,26 +1,50 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+
+
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-  nameUser: {
+  name: {
     type: String,
-    required: true
+    required: 'User name can\'t be empty'
   },
-  emailUser: {
+  email: {
     type: String,
-    required: true
+    required: 'Email can\'t be empty',
+    unique: true
   },
-  phoneUser: {
+  phone: {
     type: String,
-    required: true
+    required: 'Phone can\'t be empty',
+    minlength: [9, 'Phone must be at least 9 numbers long']
   },
-  passwordUser: {
-    type: String,
-    required: true
-  },
-  activeUser: {
+  active: {
     type: Boolean,
     default: true
-  }
-})
+  },
+  password: {
+    type: String,
+    required: 'Password can\'t be empty',
+    minlength : [6,'Password must be at least 6 character long']
+  },
+  saltSecret: String
+});
+
+// Custom validation for email
+userSchema.path('email').validate((val) => {
+    emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(val);
+}, 'Invalid e-mail.');
+
+userSchema.pre('save', function (next) {
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      this.password = hash;
+      this.saltSecret = salt;
+      next();
+    });
+  });
+});
+
 module.exports = mongoose.model('User', userSchema)
