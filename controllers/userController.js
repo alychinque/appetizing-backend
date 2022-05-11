@@ -1,33 +1,6 @@
 const User = require('../model/User.js')
 const bcrypt = require('bcryptjs')
 
-const createNewUser = async (req, res, next) => {
-  const user = req.body
-  const find = await User.findOne({ email: req.body.email }).exec();
-  try {
-    if (!find) {
-      if (req.body.password == req.body.confirm_password) {
-          //create and store the new user
-          const saltRounds = 10;
-          const hashedPwd = await bcrypt.hash(req.body.password, saltRounds);
-          const result = await User.create({
-            "name": user.name,
-            "email": user.email,
-            "phone": user.phone,
-            "password": hashedPwd,
-            });
-          res.status(201).json({ 'success': `New user ${user.name} created!` });
-      }else{
-        res.status(400).json({ 'message': 'Passwords do not match.' });
-      }
-    }else{
-      res.status(422).json({ 'message': 'User already exists.' });
-    }
-  } catch (err) {
-    res.status(400).json({ 'message': err.message });
-  }
-}
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({},{"passwordUser": 0})
@@ -92,4 +65,4 @@ const getUser = async (req, res) => {
 }
 
 
-module.exports = { createNewUser, getAllUsers, updateUser, deleteUser, getUser };
+module.exports = { getAllUsers, updateUser, deleteUser, getUser };
