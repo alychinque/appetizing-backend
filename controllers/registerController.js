@@ -6,7 +6,6 @@ const registerUser = async (req, res, next) => {
   if ( !req.body.password || Object.keys(req.body.password).length < 6) return res.status(409).json({ 'message': 'password invalid' });
   const found = await User.findOne({ email: req.body.email }).exec();
   if (found) return res.status(409).json({ 'message': 'User already exists.' });
-  if (req.body.password != req.body.confirm_password) return res.status(400).json({ 'message': 'Passwords do not match.' });
   try {
     //create and store the new user
     const saltRounds = 10;

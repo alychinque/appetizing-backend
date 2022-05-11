@@ -4,6 +4,6 @@ const loginController = require('../controllers/loginController');
 const verifyJWT = require('../middleware/verifyJWT')
 
 router.route('/')
-  .get(loginController.handleLogin)
+  .post(verifyJWT, loginController.handleLogin)
 
 module.exports = router;

@@ -28,7 +28,6 @@ const userSchema = new Schema({
     required: 'Password can\'t be empty',
     minlength : [6,'Password must be at least 6 character long']
   },
-  saltSecret: String
 });
 
 // Custom validation for email
@@ -37,14 +36,5 @@ userSchema.path('email').validate((val) => {
     return emailRegex.test(val);
 }, 'Invalid e-mail.');
 
-userSchema.pre('save', function (next) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(this.password, salt, (err, hash) => {
-      this.password = hash;
-      this.saltSecret = salt;
-      next();
-    });
-  });
-});
 
 module.exports = mongoose.model('User', userSchema)
