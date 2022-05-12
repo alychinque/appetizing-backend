@@ -6,11 +6,15 @@ const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.createNewAllergy)
+<<<<<<< HEAD
     .get(allergyController.getAllAllergy)
+=======
+    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.getAllAllergy)
+>>>>>>> c335feca67c88ca5c4b2a86b19d84dc7f5351590
     .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.updateAllergy)
     .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.deleteAllergy)
 
 router.route('/:id')
-    .get(allergyController.getAllergy)
+    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.getAllergy)
 
 module.exports = router;
