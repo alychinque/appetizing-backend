@@ -28,6 +28,7 @@ const userSchema = new Schema({
     required: 'Password can\'t be empty',
     minlength : [6,'Password must be at least 6 character long']
   },
+  refreshToken : String
 });
 
 // Custom validation for email
