@@ -14,6 +14,14 @@ const userSchema = new Schema({
     required: 'Email can\'t be empty',
     unique: true
   },
+  roles: {
+        Customer: {
+            type: Number,
+            default: 1010
+        },
+        Staff: Number, // 2020
+        Admin: Number // 3030
+    },
   phone: {
     type: String,
     required: 'Phone can\'t be empty',
