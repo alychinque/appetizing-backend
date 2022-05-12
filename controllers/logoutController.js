@@ -8,17 +8,18 @@ const handleLogout = async (req, res) => {
   const refreshToken = cookies.jwt
 
   // checks if refreshToken is in the database
-  const found = await User.findOne({ refreshToken }).exec();
-  // if not throws a message Unauthorized
-  if (!found) {
+  const foundUser = await User.findOne({ refreshToken }).exec();
+  // if not clear cookie
+  if (!foundUser) {
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
     return res.sendStatus(204)
   }
   
+  // erase user's refreshToken and save 
+  foundUser.refreshToken = ''
+  const result = await foundUser.save()
+  
   // Delete refreshToken
-  found.refreshToken = ''
-  const result = await found.save()
-
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
   res.sendStatus(204)
 }
