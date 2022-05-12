@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mealController = require('../controllers/mealController');
+const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
   .post(mealController.createNewMeal)

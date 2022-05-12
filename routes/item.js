@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const itemController = require('../controllers/itemController.js');
+const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
     .post(itemController.createNewItem)
