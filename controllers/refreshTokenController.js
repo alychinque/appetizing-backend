@@ -9,8 +9,8 @@ const handleRefreshToken = async (req, res) => {
   // fetches in the database if the email is registered
   const foundUser = await User.findOne({ refreshToken }).exec();
   // if not throws a message Unauthorized
-  if (!foundUser) res.sendStatus(403)
-  // checks if the password entered is equal to the one encrypted
+  if (!foundUser) return res.sendStatus(403)
+  // verify if the refreshToken is still valid
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
