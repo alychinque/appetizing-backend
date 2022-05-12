@@ -16,7 +16,6 @@ const createOrder = async (req, res) => {
       "date": datetime,
     })
 
-    console.log(result)
 
     res.status(201).json({ 'success': 'new order created!'})
   } catch (error) {
