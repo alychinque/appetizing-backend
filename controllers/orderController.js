@@ -23,6 +23,29 @@ const createOrder = async (req, res) => {
   }
 }
 
+const createOrderGuest = async (req, res) => {
+  const order = req.body
+  var datetime = new Date();
+
+  try {
+    // creates a new order and store in the database
+    const result = await Order.create({
+      "idUser": 'guest',
+      "meal": order.meal,
+      "drink": order.drink,
+      "table": order.table,
+      "priceTotal": order.priceTotal,
+      "status": "PAID",
+      "date": datetime,
+    })
+
+
+    res.status(201).json({ 'success': 'new order created!'})
+  } catch (error) {
+    res.status(500).json({ 'message': error.message })
+  }
+}
+
 const getAllOrders = async (req, res) => {
     const orders = await Order.find()
     if (!orders) return res.status(204).json({ 'message': 'No orders found.' })
@@ -80,4 +103,4 @@ const getOrder = async (req, res) => {
 }
 
 
-module.exports = { createOrder, getAllOrders, updateOrder, deleteOrder, getOrder }
+module.exports = { createOrder, getAllOrders, updateOrder, deleteOrder, getOrder, createOrderGuest }
