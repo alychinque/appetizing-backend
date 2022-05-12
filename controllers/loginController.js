@@ -9,7 +9,7 @@ const handleLogin = async (req, res) => {
   // fetches in the database if the email is registered
   const foundUser = await User.findOne({ email: req.body.email }).exec();
   // if not throws a message Unauthorized
-  if (!foundUser) return res.sendStatus(401).json({ 'message': 'Unauthorized not foundUser.' });
+  if (!foundUser) return res.sendStatus(401)
   // checks if the password entered is equal to the one encrypted
   const match = await bcrypt.compare(req.body.password, foundUser.password);
   if (match) {
