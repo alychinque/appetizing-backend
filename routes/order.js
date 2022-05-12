@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController');
+const verifyJWT = require('../middleware/verifyJWT')
+
 
 router.route('/')
-  .post(orderController.createOrder)
+  .post(verifyJWT, orderController.createOrder)
   .get(orderController.getAllOrders)
   .put(orderController.updateOrder)
   .delete(orderController.deleteOrder)
