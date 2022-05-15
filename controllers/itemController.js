@@ -4,7 +4,6 @@ const createNewItem = async(req, res) => {
 
     const item = req.body
     try {
-
         //create and store a new item
         const result = await Item.create({
             "nameItem": item.nameItem,
@@ -30,27 +29,30 @@ const updateItem = async(req, res) => {
     if (!item) {
         return res.status(204).json({ "message": `No item matches ID ${req.body.id}.` });
     }
-
-    item.nameItem = req.body.nameItem,
+    try{
+        item.nameItem = req.body.nameItem,
         item.priceItem = req.body.priceItem
-    const result = await item.save()
-    res.status(200).json(result)
-
+        const result = await item.save()
+        res.Itemtemstatus(200).json(result)
+    } catch (error) {
+        res.status(500).json({
+            'message': error.message
+        })
+    }
 }
 
 const deleteItem = async(req, res) => {
-    console.log(req.body.id)
-    if (!req.body.id) {
-        return res.status(400).json({ 'message': 'Item ID required.' });
-    }
-
+    if (!req.body.id)  return res.status(400).json({ 'message': 'Item ID required.' });
     const item = await Item.findOne({ _id: req.body.id }).exec();
-    console.log(item.nameItem)
-    if (!item) {
-        return res.status(204).json({ "message": `No item matches ID ${req.body.id}.` });
-    }
+    if (!item) return res.status(204).json({ "message": `No item matches ID ${req.body.id}.` });
+    try{
     const result = await item.deleteOne({ _id: req.body.id });
     res.json(result);
+    } catch (error) {
+        res.status(500).json({
+            'message': error.message
+        })
+    }
 }
 
 
@@ -62,11 +64,8 @@ const getAllItems = async(req, res) => {
 
 const getItem = async (req, res) => {
     if (!req?.params?.id) return res.status(400).json({ 'message': 'Item ID required.' });
-
     const item = await Item.findOne({ _id: req.params.id }).exec();
-    if (!item) {
-        return res.status(204).json({ "message": `No item matches ID ${req.params.id}.` });
-    }
+    if (!item) return res.status(204).json({ "message": `No item matches ID ${req.params.id}.` });
     res.json(item);
 }
 

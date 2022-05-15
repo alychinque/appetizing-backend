@@ -6,7 +6,7 @@ const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
     .post(allergyController.createNewAllergy)
-    .get(allergyController.getAllAllergy)
+    .get(allergyController.getAllAllergies)
     .put(allergyController.updateAllergy)
     .delete(allergyController.deleteAllergy)
 

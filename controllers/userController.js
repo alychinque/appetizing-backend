@@ -14,15 +14,10 @@ const getAllUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+  if (!req?.body?._id) return res.status(400).json({ 'message': 'ID parameter is required.' });
+  const user = await User.findOne({ _id: req.body._id }).exec();
+  if (!user) return res.status(204).json({ "message": `No user matches ID ${req.body._id}.` });
   try {
-    if (!req?.body?._id) {
-        return res.status(400).json({ 'message': 'ID parameter is required.' });
-    }
-    const user = await User.findOne({ _id: req.body._id }).exec();
-    if (!user) {
-        return res.status(204).json({ "message": `No user matches ID ${req.body._id}.` });
-    }
-    
     user.name = req.body.name
     user.email = req.body.email
     user.phone = req.body.phone
@@ -36,13 +31,10 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res, next) => {
+  if (!req?.body?._id) return res.status(400).json({ 'message': 'User ID required.' });
+  const user = await User.findOne({ _id: req.body._id }).exec();
+  if (!user) return res.status(204).json({ "message": `No user matches ID ${req.body._id}.` });
   try {
-    if (!req?.body?._id) return res.status(400).json({ 'message': 'User ID required.' });
-
-    const user = await User.findOne({ _id: req.body._id }).exec();
-    if (!user) {
-        return res.status(204).json({ "message": `No user matches ID ${req.body._id}.` });
-    }
     const result = await user.deleteOne({ _id: req.body._id });
     res.json(result);
   } catch (error) {
@@ -51,17 +43,11 @@ const deleteUser = async (req, res, next) => {
 }
 
 const getUser = async (req, res) => {
-  try {
-    if (!req?.params?.id) return res.status(400).json({ 'message': 'User ID required.' });
-
-    const user = await User.findOne({ _id: req.params.id }).exec();
-    if (!user) {
-        return res.status(204).json({ "message": `No User matches ID ${req.params._id}.` });
-    }
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ 'message': error.message });
-  }
+  if (!req?.params?.id) return res.status(400).json({ 'message': 'User ID required.' });
+  const user = await User.findOne({ _id: req.params.id }).exec();
+  if (!user) return res.status(204).json({ "message": `No User matches ID ${req.params._id}.` });
+  res.json(user);
+  
 }
 
 

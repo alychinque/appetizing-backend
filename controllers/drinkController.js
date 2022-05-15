@@ -31,26 +31,31 @@ const updateDrink = async (req, res) => {
         return res.status(400).json({ 'message': 'ID parameter is required.' });
     }
   const drink = await Drink.findOne({ _id: req.body.id }).exec()
-  if (!drink) {
-    return res.status(204).json({ "message": `No drink matches ID ${req.body.id}` })
+  if (!drink) return res.status(204).json({ "message": `No drink matches ID ${req.body.id}` })
+  try {
+    drink.nameDrink = req.body.nameDrink.toLowerCase()
+    drink.priceDrink = req.body.priceDrink
+    drink.category = req.body.category
+    drink.active = req.body.active
+    const result = await drink.save()
+    res.json(result)
+  } catch (err) {
+    res.status(500).json({'message': err.message})
   }
-  drink.nameDrink = req.body.nameDrink.toLowerCase()
-  drink.priceDrink = req.body.priceDrink
-  drink.category = req.body.category
-  drink.active = req.body.active
-  const result = await drink.save()
-  res.json(result)
+
 }
 
 const deleteDrink = async (req, res) => {
   if (!req?.body?.id) return res.status(400).json({ 'message': 'Drink ID required.' });
 
     const drink = await Drink.findOne({ _id: req.body.id }).exec();
-    if (!drink) {
-        return res.status(204).json({ "message": `No drink matches ID ${req.body.id}.` });
-    }
+  if (!drink) return res.status(204).json({ "message": `No drink matches ID ${req.body.id}.` });
+  try{
     const result = await drink.deleteOne({ _id: req.body.id });
     res.json(result);
+  } catch (err) {
+    res.status(500).json({'message': err.message})
+  }
 }
 const getDrink = async (req, res) => {
   if (!req?.params?.id) return res.status(400).json({ 'message': 'Drink ID required.' });
