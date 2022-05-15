@@ -13,6 +13,7 @@ const createNewMeal = async (req, res) => {
     const result = await Meal.create({
             "nameMeal": meal.nameMeal.toLowerCase(),
             "priceMeal": meal.priceMeal,
+            "photoMeal": meal.photoMeal,
             "items": meal.items,
             "allergies": meal.allergies,
             "extras": meal.extras,
