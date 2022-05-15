@@ -11,6 +11,11 @@ const mealSchema = new Schema({
     type: Number,
     required: true
   },
+  photoMeal: {
+    type: String,
+    required: false,
+    unique: false
+  },
   items: {
     type: Array,
     required: true

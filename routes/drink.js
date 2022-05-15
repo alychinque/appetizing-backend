@@ -5,7 +5,7 @@ const drinkController = require('../controllers/drinkController')
 const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
-  .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.createNewDrink)
+  .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff, ROLES_LIST.Customer), drinkController.createNewDrink)
   .get(drinkController.getAllDrinks)
   .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.updateDrink)
   .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.deleteDrink)

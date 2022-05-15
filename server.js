@@ -16,12 +16,6 @@ const PORT = process.env.PORT || 9000
 // Connect to MongoDB
 connectDB()
 
-/*app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods","PUT,GET,POST,DELETE,OPTIONS");
-    next();
-  });*/
-
 // Cross Origin Resource Sharing
 app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type, Accept,Authorization,Origin");
