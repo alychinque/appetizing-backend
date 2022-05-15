@@ -1,16 +1,16 @@
 const express = require('express');
-const ROLES_LIST = require('../config/roles_list.js');
 const router = express.Router();
 const allergyController = require('../controllers/allergyController.js');
+const ROLES_LIST = require('../config/roles_list.js');
 const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
-    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.createNewAllergy)
+    .post(allergyController.createNewAllergy)
     .get(allergyController.getAllAllergy)
-    .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.updateAllergy)
-    .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.deleteAllergy)
+    .put(allergyController.updateAllergy)
+    .delete(allergyController.deleteAllergy)
 
 router.route('/:id')
-    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), allergyController.getAllergy)
+    .get(allergyController.getAllergy)
 
 module.exports = router;

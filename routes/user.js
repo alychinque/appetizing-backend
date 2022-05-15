@@ -1,7 +1,7 @@
 const express = require('express');
-const ROLES_LIST = require('../config/roles_list.js');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const ROLES_LIST = require('../config/roles_list.js');
 const verifyRoles = require('../middleware/verifyRoles')
 
 

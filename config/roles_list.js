@@ -1,6 +1,6 @@
 const ROLES_LIST = {
-  "Customer": 1010,
-  "Staff": 2020,
-  "Admin": 3030
+  "Customer": 1,
+  "Staff": 2,
+  "Admin": 3
 }
 module.exports = ROLES_LIST

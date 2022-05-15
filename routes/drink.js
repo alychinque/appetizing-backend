@@ -1,14 +1,14 @@
 const express = require('express')
-const ROLES_LIST = require('../config/roles_list.js');
 const router = express.Router()
 const drinkController = require('../controllers/drinkController')
+const ROLES_LIST = require('../config/roles_list.js');
 const verifyRoles = require('../middleware/verifyRoles')
 
 router.route('/')
-  .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.createNewDrink)
+  .post(drinkController.createNewDrink)
   .get(drinkController.getAllDrinks)
-  .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.updateDrink)
-  .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), drinkController.deleteDrink)
+  .put(drinkController.updateDrink)
+  .delete(drinkController.deleteDrink)
 
 router.route('/:id')
   .get(drinkController.getDrink)
