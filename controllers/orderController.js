@@ -69,8 +69,8 @@ const updateOrder = async (req, res) => {
 }
 
 const deleteOrder = async (req, res, next) => {
-  if (!req?.body?._id) return res.status(400).json({ 'message': 'Order ID required.' });
-  const order = await Order.findOne({ _id: req.body._id }).exec();
+  if (!req?.params?.id) return res.status(400).json({ 'message': 'Order ID required.' });
+  const order = await Order.findOne({ _id: req.params.id }).exec();
   if (!order) return res.status(204).json({ "message": `No order matches ID ${req.body._id}.` });
   try {
     const result = await order.deleteOne({ _id: req.body._id });

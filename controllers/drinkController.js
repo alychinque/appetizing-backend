@@ -46,9 +46,9 @@ const updateDrink = async (req, res) => {
 }
 
 const deleteDrink = async (req, res) => {
-  if (!req?.body?.id) return res.status(400).json({ 'message': 'Drink ID required.' });
+  if (!req?.params?.id) return res.status(400).json({ 'message': 'Drink ID required.' });
 
-    const drink = await Drink.findOne({ _id: req.body.id }).exec();
+  const drink = await Drink.findOne({ _id: req.params.id }).exec();
   if (!drink) return res.status(204).json({ "message": `No drink matches ID ${req.body.id}.` });
   try{
     const result = await drink.deleteOne({ _id: req.body.id });

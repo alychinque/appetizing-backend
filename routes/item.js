@@ -8,9 +8,9 @@ router.route('/')
     .post(itemController.createNewItem)
     .get(itemController.getAllItems)
     .put(itemController.updateItem)
-    .delete(itemController.deleteItem)
-
-router.route('/:id')
+    
+    router.route('/:id')
     .get(itemController.getItem)
+    .delete(itemController.deleteItem)
 
 module.exports = router;
