@@ -8,9 +8,9 @@ router.route('/')
   .post(mealController.createNewMeal)
   .get(mealController.getAllMeals)
   .put(mealController.updateMeal)
+  
+  router.route('/:id')
+  .get(mealController.getMeal)
   .delete(mealController.deleteMeal)
-
-router.route('/:id')
-    .get(mealController.getMeal);
 
 module.exports = router;

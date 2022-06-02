@@ -8,9 +8,9 @@ router.route('/')
     .post(allergyController.createNewAllergy)
     .get(allergyController.getAllAllergies)
     .put(allergyController.updateAllergy)
-    .delete(allergyController.deleteAllergy)
-
-router.route('/:id')
+    
+    router.route('/:id')
     .get(allergyController.getAllergy)
+    .delete(allergyController.deleteAllergy)
 
 module.exports = router;

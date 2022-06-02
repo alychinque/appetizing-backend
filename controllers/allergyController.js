@@ -36,8 +36,8 @@ const updateAllergy = async(req, res) => {
 }
 
 const deleteAllergy = async(req, res) => {
-    if (!req.body.id) return res.status(400).json({ 'message': 'Allergy ID required.' });
-    const allergy = await Allergy.findOne({ _id: req.body.id }).exec();
+    if (!req.params.id) return res.status(400).json({ 'message': 'Allergy ID required.' });
+    const allergy = await Allergy.findOne({ _id: req.params.id }).exec();
     if (!allergy) return res.status(204).json({ "message": `No allergy matches ID ${req.body.id}.` });
     try{
         const result = await allergy.deleteOne({ _id: req.body.id });

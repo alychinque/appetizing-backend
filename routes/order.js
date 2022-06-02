@@ -9,9 +9,9 @@ router.route('/')
   .post(orderController.createOrderGuest)
   .get(orderController.getAllOrders)
   .put(orderController.updateOrder)
-  .delete(orderController.deleteOrder)
-
+  
   router.route('/:id')
-    .get(orderController.getOrder);
+  .get(orderController.getOrder)
+  .delete(orderController.deleteOrder)
 
 module.exports = router;

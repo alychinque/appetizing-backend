@@ -46,8 +46,8 @@ const updateMeal = async (req, res) => {
 }
 
 const deleteMeal = async (req, res) => {
-    if (!req?.body?.id) return res.status(400).json({ 'message': 'Meal ID required.' });
-    const meal = await Meal.findOne({ _id: req.body.id }).exec();
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'Employee ID required.' });
+    const meal = await Meal.findOne({ _id: req.params.id }).exec();
     if (!meal) return res.status(204).json({ "message": `No meal matches ID ${req.body.id}.` });
     try{
         const result = await meal.deleteOne({ _id: req.body.id });
